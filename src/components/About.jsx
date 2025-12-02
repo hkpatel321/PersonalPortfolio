@@ -54,35 +54,50 @@ const About = () => {
                 <h2 className={`text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]`}>Overview.</h2>
             </motion.div>
 
-            <motion.p
-                variants={fadeIn("", "", 0.1, 1)}
-                className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
-            >
-                I'm a passionate Full Stack Developer from India with experience in JavaScript, React, Node.js, and Java.
-                I also have a strong interest in Data Science and App Development.
-                I'm a quick learner and collaborate closely with clients to
-                create efficient, scalable, and user-friendly solutions that solve
-                real-world problems. Let's work together to bring your ideas to life!
-            </motion.p>
-
-            {/* Social Links in About Section */}
-            <motion.div
-                variants={fadeIn("", "", 0.2, 1)}
-                className="mt-6 flex gap-4"
-            >
-                {socialLinks.map((link) => (
-                    <a
-                        key={link.name}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white hover:text-[#915EFF] transition-colors text-2xl"
-                        title={link.name}
+            <div className="mt-4 flex flex-col md:flex-row gap-10 items-center">
+                <div className="flex-1">
+                    <motion.p
+                        variants={fadeIn("", "", 0.1, 1)}
+                        className='text-secondary text-[17px] max-w-3xl leading-[30px]'
                     >
-                        {getIcon(link.icon)}
-                    </a>
-                ))}
-            </motion.div>
+                        I'm a passionate Full Stack Developer from India with experience in JavaScript, React, Node.js, and Java.
+                        I also have a strong interest in Data Science and App Development.
+                        I'm a quick learner and collaborate closely with clients to
+                        create efficient, scalable, and user-friendly solutions that solve
+                        real-world problems. Let's work together to bring your ideas to life!
+                    </motion.p>
+
+                    {/* Social Links in About Section */}
+                    <motion.div
+                        variants={fadeIn("", "", 0.2, 1)}
+                        className="mt-6 flex gap-4"
+                    >
+                        {socialLinks.map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-white hover:text-[#915EFF] transition-colors text-2xl"
+                                title={link.name}
+                            >
+                                {getIcon(link.icon)}
+                            </a>
+                        ))}
+                    </motion.div>
+                </div>
+
+                <motion.div
+                    variants={fadeIn("left", "", 0.3, 1)}
+                    className="flex-1 flex justify-center items-center"
+                >
+                    <img
+                        src="/Photo.jpeg"
+                        alt="Het"
+                        className="w-[300px] h-[300px] object-cover rounded-[20px] border-4 border-secondary shadow-card"
+                    />
+                </motion.div>
+            </div>
 
             <div className='mt-20 flex flex-wrap gap-10'>
                 {services.map((service, index) => (
