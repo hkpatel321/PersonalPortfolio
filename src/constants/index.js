@@ -328,6 +328,20 @@ const achievements = [
 
 const certifications = [
     {
+        name: "Database Structures and Management with MySQL",
+        issuer: "Meta / Coursera",
+        date: "June 2026",
+        link: "/Coursera_Database_Structures_and_Management_with_MySQL.pdf",
+        color: "blue",
+    },
+    {
+        name: "Supervised Machine Learning: Regression and Classification",
+        issuer: "DeepLearning.AI & Stanford University",
+        date: "March 2026",
+        link: "/Coursera_Supervised_Machine_Learning_Regression_and_Classification.pdf",
+        color: "violet",
+    },
+    {
         name: "Oracle Cloud Infrastructure 2025 Certified Foundations Associate",
         issuer: "Oracle",
         date: "November 2025",
@@ -376,13 +390,6 @@ const certifications = [
         date: "2024",
         link: "/certificate-the-ultimate-guide-to-effective-communication-english-premium-63cc1d4aff5eb468886f2177.pdf",
         color: "rose",
-    },
-    {
-        name: "GirlScript Summer of Code — Contributor Certificate",
-        issuer: "GirlScript Foundation",
-        date: "November 2024",
-        link: "",
-        color: "emerald",
     },
 ];
 
