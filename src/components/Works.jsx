@@ -1,71 +1,69 @@
 import React from "react";
-import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
-// import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
 
-const ProjectCard = ({
-    index,
-    name,
-    description,
-    tags,
-    image,
-    source_code_link,
-}) => {
+const ProjectCard = ({ index, name, description, tags, source_code_link, live_demo_link, gradient }) => {
     return (
-        <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
-            <Tilt
-                options={{
-                    max: 45,
-                    scale: 1,
-                    speed: 450,
-                }}
-                className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
-            >
-                <div className='relative w-full h-[230px]'>
-                    {/* <img
-            src={image}
-            alt='project_image'
-            className='w-full h-full object-cover rounded-2xl'
-          /> */}
-                    <div className="w-full h-full bg-violet-500 rounded-2xl flex justify-center items-center text-white font-bold">
+        <motion.div
+            variants={fadeIn("up", "spring", index * 0.12, 0.6)}
+            className="glow-card group overflow-hidden"
+        >
+            {/* Top gradient stripe */}
+            <div className={`h-1 w-full bg-gradient-to-r ${gradient}`} />
+
+            <div className="p-6 sm:p-7">
+                {/* Header: title + links */}
+                <div className="flex items-start justify-between gap-4 mb-4">
+                    <h3 className="text-text-primary font-semibold text-[18px] leading-snug group-hover:text-accent transition-colors">
                         {name}
-                    </div>
-
-                    <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
-                        <div
-                            onClick={() => window.open(source_code_link, "_blank")}
-                            className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
-                        >
-                            {/* <img
-                src={github}
-                alt='source code'
-                className='w-1/2 h-1/2 object-contain'
-              /> */}
-                            <div className="text-white text-xs">GH</div>
-                        </div>
+                    </h3>
+                    <div className="flex gap-2 flex-shrink-0">
+                        {source_code_link && (
+                            <a
+                                href={source_code_link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-text-secondary hover:text-text-primary hover:border-accent/30 hover:bg-accent/10 transition-all"
+                                title="Source Code"
+                            >
+                                <FaGithub className="w-4 h-4" />
+                            </a>
+                        )}
+                        {live_demo_link && (
+                            <a
+                                href={live_demo_link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-text-secondary hover:text-text-primary hover:border-emerald-500/30 hover:bg-emerald-500/10 transition-all"
+                                title="Live Demo"
+                            >
+                                <FaExternalLinkAlt className="w-3.5 h-3.5" />
+                            </a>
+                        )}
                     </div>
                 </div>
 
-                <div className='mt-5'>
-                    <h3 className='text-white font-bold text-[24px]'>{name}</h3>
-                    <p className='mt-2 text-secondary text-[14px]'>{description}</p>
-                </div>
+                {/* Description */}
+                <p className="text-text-secondary text-[14px] leading-relaxed mb-5">
+                    {description}
+                </p>
 
-                <div className='mt-4 flex flex-wrap gap-2'>
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2">
                     {tags.map((tag) => (
-                        <p
+                        <span
                             key={`${name}-${tag.name}`}
-                            className={`text-[14px] ${tag.color}`}
+                            className={`text-[12px] font-medium px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] ${tag.color}`}
                         >
-                            #{tag.name}
-                        </p>
+                            {tag.name}
+                        </span>
                     ))}
                 </div>
-            </Tilt>
+            </div>
         </motion.div>
     );
 };
@@ -74,24 +72,21 @@ const Works = () => {
     return (
         <>
             <motion.div variants={textVariant()}>
-                <p className={`sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider`}>My work</p>
-                <h2 className={`text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]`}>Projects.</h2>
+                <div className="section-label">My Work</div>
+                <h2 className="text-text-primary font-bold text-[36px] sm:text-[48px] tracking-tight">
+                    Projects<span className="text-accent">.</span>
+                </h2>
             </motion.div>
 
-            <div className='w-full flex'>
-                <motion.p
-                    variants={fadeIn("", "", 0.1, 1)}
-                    className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
-                >
-                    Following projects showcases my skills and experience through
-                    real-world examples of my work. Each project is briefly described with
-                    links to code repositories and live demos in it. It reflects my
-                    ability to solve complex problems, work with different technologies,
-                    and manage projects effectively.
-                </motion.p>
-            </div>
+            <motion.p
+                variants={fadeIn("", "", 0.1, 1)}
+                className='mt-4 text-text-secondary text-[16px] max-w-2xl leading-relaxed'
+            >
+                Each project showcases real-world problem solving across full-stack development,
+                AI/ML, and cloud-native architectures. Links to code repositories and live demos included.
+            </motion.p>
 
-            <div className='mt-20 flex flex-wrap gap-7'>
+            <div className='mt-12 grid grid-cols-1 md:grid-cols-2 gap-6'>
                 {projects.map((project, index) => (
                     <ProjectCard key={`project-${index}`} index={index} {...project} />
                 ))}

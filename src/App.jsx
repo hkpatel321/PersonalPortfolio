@@ -1,26 +1,22 @@
-import { BrowserRouter } from "react-router-dom";
-import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas, Footer } from "./components";
+import { About, Contact, Experience, Hero, Navbar, Works, Skills, Achievements, Certifications, Footer } from "./components";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className='relative z-0 bg-primary'>
-        <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
-          <Navbar />
-          <Hero />
-        </div>
-        <About />
-        <Experience />
-        <Tech />
-        <Works />
-        <Feedbacks />
-        <div className='relative z-0'>
-          <Contact />
-        </div>
-        <StarsCanvas />
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <div className='relative z-0 bg-primary min-h-screen'>
+      {/* Noise texture overlay */}
+      <div className="noise-overlay" />
+      
+      <Navbar />
+      <Hero />
+      <About />
+      <Skills />
+      <Experience />
+      <Works />
+      <Achievements />
+      <Certifications />
+      <Contact />
+      <Footer />
+    </div>
   );
 }
 

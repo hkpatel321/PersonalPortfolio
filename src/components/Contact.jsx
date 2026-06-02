@@ -2,11 +2,10 @@ import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
-import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
-import { slideIn } from "../utils/motion";
+import { fadeIn, textVariant } from "../utils/motion";
 import { socialLinks } from "../constants";
-import { FaLinkedin, FaGithub, FaCode, FaEnvelope } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaCode, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
 import { SiLeetcode, SiCodeforces, SiGeeksforgeeks } from "react-icons/si";
 
 const Contact = () => {
@@ -16,28 +15,17 @@ const Contact = () => {
         email: "",
         message: "",
     });
-
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const handleChange = (e) => {
-        const { target } = e;
-        const { name, value } = target;
-
-        setForm({
-            ...form,
-            [name]: value,
-        });
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-
-        // TODO: Replace with your own EmailJS service ID, template ID, and public key
-        // Create an account at https://www.emailjs.com/
-        // Service ID: service_xxxx
-        // Template ID: template_xxxx
-        // Public Key: xxxxxxxxxxxx
 
         emailjs
             .send(
@@ -49,124 +37,164 @@ const Contact = () => {
                     from_email: form.email,
                     to_email: "phet30440@gmail.com",
                     message: form.message,
+                    reply_to: form.email,
                 },
                 'z9AV3hl0jujnuQiYe'
             )
             .then(
                 () => {
                     setLoading(false);
-                    alert("Thank you. I will get back to you as soon as possible.");
-
-                    setForm({
-                        name: "",
-                        email: "",
-                        message: "",
-                    });
+                    setSuccess(true);
+                    setForm({ name: "", email: "", message: "" });
+                    setTimeout(() => setSuccess(false), 5000);
                 },
                 (error) => {
                     setLoading(false);
                     console.error(error);
-
-                    alert("Ahh, something went wrong. Please try again.");
+                    alert("Something went wrong. Please try again.");
                 }
             );
     };
 
     const getIcon = (iconName) => {
+        const cls = "w-[18px] h-[18px]";
         switch (iconName) {
-            case "linkedin": return <FaLinkedin className="w-6 h-6" />;
-            case "github": return <FaGithub className="w-6 h-6" />;
-            case "leetcode": return <SiLeetcode className="w-6 h-6" />;
-            case "codeforces": return <SiCodeforces className="w-6 h-6" />;
-            case "geeksforgeeks": return <SiGeeksforgeeks className="w-6 h-6" />;
-            case "email": return <FaEnvelope className="w-6 h-6" />;
-            default: return <FaCode className="w-6 h-6" />;
+            case "linkedin": return <FaLinkedin className={cls} />;
+            case "github": return <FaGithub className={cls} />;
+            case "leetcode": return <SiLeetcode className={cls} />;
+            case "codeforces": return <SiCodeforces className={cls} />;
+            case "geeksforgeeks": return <SiGeeksforgeeks className={cls} />;
+            case "email": return <FaEnvelope className={cls} />;
+            default: return <FaCode className={cls} />;
         }
     };
 
     return (
-        <div
-            className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden`}
-        >
-            <motion.div
-                variants={slideIn("left", "tween", 0.2, 1)}
-                className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
-            >
-                <p className={`sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider`}>Get in touch</p>
-                <h3 className={`text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]`}>Contact.</h3>
+        <>
+            <motion.div variants={textVariant()}>
+                <div className="section-label">Get in touch</div>
+                <h2 className="text-text-primary font-bold text-[36px] sm:text-[48px] tracking-tight">
+                    Contact<span className="text-accent">.</span>
+                </h2>
+            </motion.div>
 
-                <form
-                    ref={formRef}
-                    onSubmit={handleSubmit}
-                    className='mt-12 flex flex-col gap-8'
+            <div className="mt-10 grid grid-cols-1 lg:grid-cols-5 gap-8">
+                {/* Contact Form - 3 cols */}
+                <motion.div
+                    variants={fadeIn("", "", 0.1, 1)}
+                    className="glass-card p-8 lg:col-span-3"
                 >
-                    <label className='flex flex-col'>
-                        <span className='text-white font-medium mb-4'>Your Name</span>
-                        <input
-                            type='text'
-                            name='name'
-                            value={form.name}
-                            onChange={handleChange}
-                            placeholder="What's your good name?"
-                            className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
-                        />
-                    </label>
-                    <label className='flex flex-col'>
-                        <span className='text-white font-medium mb-4'>Your Email</span>
-                        <input
-                            type='email'
-                            name='email'
-                            value={form.email}
-                            onChange={handleChange}
-                            placeholder="What's your web address?"
-                            className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
-                        />
-                    </label>
-                    <label className='flex flex-col'>
-                        <span className='text-white font-medium mb-4'>Your Message</span>
-                        <textarea
-                            rows={7}
-                            name='message'
-                            value={form.message}
-                            onChange={handleChange}
-                            placeholder='What you want to say?'
-                            className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
-                        />
-                    </label>
+                    {success && (
+                        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[14px]">
+                            ✓ Message sent successfully! I'll get back to you soon.
+                        </div>
+                    )}
 
-                    <div className="flex justify-between items-center">
-                        <button
-                            type='submit'
-                            className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary'
-                        >
-                            {loading ? "Sending..." : "Send"}
+                    <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-5">
+                        <label className="flex flex-col gap-2">
+                            <span className="text-text-primary font-medium text-[14px]">Name</span>
+                            <input
+                                type="text"
+                                name="name"
+                                value={form.name}
+                                onChange={handleChange}
+                                placeholder="Your name"
+                                required
+                                className="form-input"
+                            />
+                        </label>
+
+                        <label className="flex flex-col gap-2">
+                            <span className="text-text-primary font-medium text-[14px]">Email</span>
+                            <input
+                                type="email"
+                                name="email"
+                                value={form.email}
+                                onChange={handleChange}
+                                placeholder="your@email.com"
+                                required
+                                className="form-input"
+                            />
+                        </label>
+
+                        <label className="flex flex-col gap-2">
+                            <span className="text-text-primary font-medium text-[14px]">Message</span>
+                            <textarea
+                                rows={5}
+                                name="message"
+                                value={form.message}
+                                onChange={handleChange}
+                                placeholder="What would you like to say?"
+                                required
+                                className="form-input resize-none"
+                            />
+                        </label>
+
+                        <button type="submit" className="btn-primary w-fit mt-2" disabled={loading}>
+                            <FaPaperPlane className="w-3.5 h-3.5" />
+                            {loading ? "Sending..." : "Send Message"}
                         </button>
+                    </form>
+                </motion.div>
 
-                        <div className="flex gap-4">
+                {/* Contact Info - 2 cols */}
+                <motion.div
+                    variants={fadeIn("left", "", 0.2, 1)}
+                    className="lg:col-span-2 space-y-6"
+                >
+                    {/* Info Card */}
+                    <div className="glass-card p-7">
+                        <h3 className="text-text-primary font-semibold text-[17px] mb-5">Contact Info</h3>
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+                                    <FaEnvelope className="w-4 h-4" />
+                                </div>
+                                <div>
+                                    <p className="text-text-muted text-[12px]">Email</p>
+                                    <a href="mailto:het.patel.tech48@gmail.com" className="text-text-primary text-[14px] hover:text-accent transition-colors">
+                                        het.patel.tech48@gmail.com
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
+                                    <FaMapMarkerAlt className="w-4 h-4" />
+                                </div>
+                                <div>
+                                    <p className="text-text-muted text-[12px]">Location</p>
+                                    <p className="text-text-primary text-[14px]">Ahmedabad, Gujarat, India</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Social Links Card */}
+                    <div className="glass-card p-7">
+                        <h3 className="text-text-primary font-semibold text-[17px] mb-5">Connect</h3>
+                        <div className="grid grid-cols-3 gap-3">
                             {socialLinks.map((link) => (
                                 <a
                                     key={link.name}
                                     href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-white hover:text-[#915EFF] transition-colors"
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-accent/30 hover:bg-accent/5 transition-all group"
                                     title={link.name}
                                 >
-                                    {getIcon(link.icon)}
+                                    <span className="text-text-secondary group-hover:text-accent transition-colors">
+                                        {getIcon(link.icon)}
+                                    </span>
+                                    <span className="text-[11px] text-text-muted group-hover:text-text-secondary transition-colors">
+                                        {link.name}
+                                    </span>
                                 </a>
                             ))}
                         </div>
                     </div>
-                </form>
-            </motion.div>
-
-            <motion.div
-                variants={slideIn("right", "tween", 0.2, 1)}
-                className='xl:flex-1 xl:h-auto md:h-[550px] h-[350px]'
-            >
-                <EarthCanvas />
-            </motion.div>
-        </div>
+                </motion.div>
+            </div>
+        </>
     );
 };
 

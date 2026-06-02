@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-// import { styles } from "../styles"; // Assuming styles are global or inline for now
 import { staggerContainer } from "../utils/motion";
 
 const SectionWrapper = (Component, idName) =>
@@ -9,8 +8,8 @@ const SectionWrapper = (Component, idName) =>
                 variants={staggerContainer()}
                 initial='hidden'
                 whileInView='show'
-                viewport={{ once: true, amount: 0.25 }}
-                className={`sm:px-16 px-6 sm:py-16 py-10 max-w-7xl mx-auto relative z-0`}
+                viewport={{ once: true, amount: 0.15 }}
+                className={`sm:px-16 px-6 sm:py-20 py-12 max-w-7xl mx-auto relative z-0`}
             >
                 <span className='hash-span' id={idName}>
                     &nbsp;
