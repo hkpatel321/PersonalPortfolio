@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { navLinks } from "../constants";
-import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
 
 const Navbar = () => {
     const [active, setActive] = useState("");
@@ -54,17 +53,6 @@ const Navbar = () => {
                             </a>
                         </li>
                     ))}
-                    <li>
-                        <a
-                            href="/HetResume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn-primary !py-2 !px-5 !text-[13px] !rounded-lg"
-                        >
-                            <HiOutlineDocumentArrowDown className="w-4 h-4" />
-                            Resume
-                        </a>
-                    </li>
                 </ul>
 
                 {/* Mobile Menu Button */}
@@ -100,17 +88,6 @@ const Navbar = () => {
                                     </a>
                                 </li>
                             ))}
-                            <li className="pt-2 border-t border-white/[0.06]">
-                                <a
-                                    href="/HetResume.pdf"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="btn-primary !py-2.5 !px-5 !text-[13px] w-full justify-center"
-                                >
-                                    <HiOutlineDocumentArrowDown className="w-4 h-4" />
-                                    Resume
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 )}
